@@ -1,7 +1,5 @@
 <h1>rockwriter</h1>
 Tired of writing rockspecs by yourself? Here's a solution.<br>
-![GitHub stars](https://img.shields.io/github/stars/daelvn/rockwriter.svg?style=flat-square) ![Mastodon Follow](https://img.shields.io/mastodon/follow/174796?domain=https%3A%2F%2Fqueer.party&style=for-the-badge)<br>
-![example](.github/example.png)
 
 ## Why this?
 
