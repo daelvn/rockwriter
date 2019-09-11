@@ -107,7 +107,7 @@ if args.update
   if doTagv
     tagv = ap
       required: true
-      prompt:   "New tag     ->"
+      prompt:   "New tag     -> "
   local oldv
   with fs.safeOpen args.path, "r+"
     error "#{.error}" if .error
