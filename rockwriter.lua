@@ -1,4 +1,3 @@
-#!/usr/bin/env lua
 local fs = fs or require("filekit")
 local si = require("sirocco")
 local argparse = require("argparse")
@@ -136,7 +135,7 @@ if args.update then
   if doTagv then
     tagv = ap({
       required = true,
-      prompt = "New tag     ->"
+      prompt = "New tag     -> "
     })
   end
   local oldv
@@ -164,7 +163,8 @@ else
     dep = { },
     s = { },
     b = { },
-    i = { }
+    i = { },
+    t = { }
   }
   if not (args.rf) then
     pkg.rf = nil

@@ -122,7 +122,8 @@ if args.update
   print "Moving #{args.path} (#{oldv}) to #{args.path\gsub (sanitize oldv), newv} (#{newv})"
   fs.move args.path, args.path\gsub (sanitize oldv), newv
 else
-  pkg               = { d: {}, dep: {}, s: {}, b: {}, i: {} }
+  pkg               = { d: {}, dep: {}, s: {}, b: {}, i: {}, t: {} }
+  -- general
   pkg.rf            = unless args.rf then nil else ap
     prompt:         "Rockspec format          -> "
     possibleValues: { "1.0" }
@@ -133,6 +134,7 @@ else
   pkg.version       = ap
     required:       true
     prompt:         "Package version          -> "
+  -- description
   pkg.d.summary     = ap prompt:                                     "Summary                  -> "
   pkg.d.detailed    = ap prompt:                                     "Detailed description     -> "
   pkg.d.homepage    = ap prompt:                                     "Homepage                 -> "
@@ -140,9 +142,11 @@ else
   pkg.d.iu          = unless args.iu        then nil else ap prompt: "Issues URL               -> "
   pkg.d.mt          = unless args.mt        then nil else ap prompt: "Maintainer               -> "
   pkg.d.labels      = unless args.labels    then nil else ap prompt: "Labels (space-sep)       -> "
+  -- dependencies
   pkg.dep.platforms = unless args.platforms then nil else ap prompt: "Platforms (space-sep)    -> "
   pkg.dep.deps      = ap prompt:                                     "Dependencies (space-sep) -> "
   pkg.dep.buildeps  = unless args.bdeps     then nil else ap prompt: "Build deps (space-sep)   -> "
+  -- source
   pkg.s.url         = ap
     required:       true
     prompt:         "Source URL               -> "
@@ -152,6 +156,7 @@ else
   pkg.s.tag         = unless args.tag    then nil else ap prompt: "Tag                      -> "
   pkg.s.branch      = unless args.branch then nil else ap prompt: "Branch                   -> "
   pkg.s.mod         = unless args.mod    then nil else ap prompt: "Module                   -> "
+  -- build
   pkg.b.copydir     = ap prompt:                                  "Copy dirs (space-sep)    -> "
   pkg.b.type        = ap
     required:       true
@@ -183,6 +188,7 @@ else
         break unless pass mod
         path = ap prompt: "   Path                  -> "
         pkg.b.builtin[mod] = path
+  -- install
   pkg.i.do              = pick1 ask si.confirm prompt: "Want to add install details?"
   --
   pkg.i.doLua, pkg.i.doLib, pkg.i.doConf, pkg.i.doBin = false, false, false, false
@@ -223,6 +229,11 @@ else
       break unless pass name
       path = ap prompt: "   Path                  -> "
       pkg.i.bin[name] = path
+  -- test
+  --pkg.t.do = pick1 ask si.confirm prompt: "Want to add test details?"
+  --if pkg.t.do
+  --  pkg.rf       = "3.0"
+  --  pkg.t.doDeps = pick1 ask si.confirm prompt: "Want to add test dependencies?"
   --
   with fs.safeOpen args.path, "w"
     error "#{.error}" if .error
